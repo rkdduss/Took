@@ -206,7 +206,6 @@
 		1991F35A2C9C325B0030EFDE = {
 			isa = PBXGroup;
 			children = (
-				196B9D712CE723B1006DFF0E /* Server */,
 				1991F3652C9C325B0030EFDE /* Took */,
 				1991F3642C9C325B0030EFDE /* Products */,
 			);
@@ -223,6 +222,7 @@
 		1991F3652C9C325B0030EFDE /* Took */ = {
 			isa = PBXGroup;
 			children = (
+				196B9D712CE723B1006DFF0E /* Server */,
 				196B9DF32CEB6F92006DFF0E /* Auth */,
 				198D2CCE2CD3A10E001F09EB /* Pretendard */,
 				198D2CCC2CD39F4C001F09EB /* Info.plist */,
