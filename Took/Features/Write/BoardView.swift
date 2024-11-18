@@ -2,20 +2,16 @@ import SwiftUI
 import PhotosUI
 
 struct BoardView: View {
-    @ObservedObject var viewModel = LoginViewModel(user: User(name: "박민주", classId: "1116", id: "alswn", password: "alswn"))
-    
+    @StateObject var boardVM = BoardViewModel()
+    @State var category = ""
     @Environment(\.dismiss) var dismiss
-    @Binding var posts: [Post]
-    @State var category: String
-    @State var title = ""
-    @State var content = ""
     @State var next = false
     @State private var openPhotoPicker = false
     @State private var selectedImages: [UIImage] = []
     @FocusState private var focusOn: Bool
     
     var wordCount: Int {
-        title.isEmpty ? 0 : title.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespacesAndNewlines).count
+        boardVM.title.isEmpty ? 0 : boardVM.title.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespacesAndNewlines).count
     }
 
     var body: some View {
@@ -59,7 +55,7 @@ struct BoardView: View {
                             .padding(.bottom, 10)
                         
                         Text("제목").font(.custom("Pretendard-Black", size: 12))
-                        TextField("", text: $title)
+                        TextField("", text: $boardVM.title)
                             .autocapitalization(.none)
                             .font(.system(size: 14).weight(.regular))
                             .padding()
@@ -78,7 +74,7 @@ struct BoardView: View {
                             .stroke(lineWidth: 0.2)
                             .frame(width: 338, height: 234)
                             .overlay(alignment: .top) {
-                                TextEditor(text: $content)
+                                TextEditor(text: $boardVM.content)
                                     .font(.system(size: 14).weight(.regular))
                                     .cornerRadius(14)
                                     .frame(width: 310, height: 195)
@@ -86,12 +82,9 @@ struct BoardView: View {
                                     .onAppear {
                                         focusOn = false
                                     }
-                                    .onChange(of: content) { i in
-                                        
-                                    }
                                     .overlay(
                                         HStack(spacing: .zero) {
-                                            Text("\(content.count)")
+                                            Text("\(boardVM.content.count)")
                                                 .foregroundColor(.blue)
                                             Text("/500")
                                         }
@@ -146,15 +139,11 @@ struct BoardView: View {
                     .padding(.leading, 27)
                     
                     Button {
-                        self.viewModel.detailRequest = true
-                        let newPost = Post(title: title, content: content)
-                        posts.append(newPost)
-                        title = ""
-                        content = ""
+                        boardVM.BoardWrite()
                     } label: {
                         RoundedRectangle(cornerRadius: 13)
                             .frame(width: 338, height: 58)
-                            .foregroundColor(content.count <= 500 && !title.isEmpty && !content.isEmpty ? .color : .disabled)
+                            .foregroundColor(boardVM.content.count <= 500 && !boardVM.title.isEmpty && !boardVM.content.isEmpty ? .color : .disabled)
                             .overlay(
                                 Text("작성 완료")
                                     .font(.system(size: 20).weight(.semibold))
@@ -162,7 +151,7 @@ struct BoardView: View {
                                     .kerning(1.5)
                             )
                     }
-                    .disabled(title.count > 500 || title.isEmpty || title.isEmpty)
+                    .disabled(boardVM.content.count > 500 || boardVM.title.isEmpty || boardVM.title.isEmpty)
                     
                     NavigationLink(destination: MainView(),isActive: $next) {
                         EmptyView()
@@ -175,15 +164,6 @@ struct BoardView: View {
                 }
             }
             .navigationBarBackButtonHidden()
-            .alert(isPresented: $viewModel.detailRequest) {
-                Alert(title: Text("게시가 완료되었어요!"), message: Text("불만 사항 게시글이 정상적으로 게시 되었어요."), dismissButton: .default(Text("확인")) {
-                    self.viewModel.alertOn = false
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        self.next = true
-                    }
-                })
-            }
             .sheet(isPresented: $openPhotoPicker) {
                 PhotoPicker(selectedImages: $selectedImages)
             }
@@ -192,10 +172,10 @@ struct BoardView: View {
 }
 
 struct BoardView_Previews: PreviewProvider {
-    @State static var posts = [Post]()
+    
 
     static var previews: some View {
-        BoardView(posts: $posts, category: "")
+        BoardView(category: "")
     }
 }
 

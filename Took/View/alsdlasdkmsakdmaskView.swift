@@ -6,14 +6,20 @@ struct alsdlasdkmsakdmaskView: View {
     
     var body: some View {
         VStack {
-            TextField("id", text: $viewModel.username)
+            TextField("email", text: $viewModel.email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
-            SecureField("password", text: $viewModel.password)
+            SecureField("password", text: $viewModel.username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
+            TextField("username", text: $viewModel.password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            TextField("number", text: $viewModel.studentNumber)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
             Button {
                 viewModel.login()
             } label: {
@@ -29,17 +35,32 @@ struct alsdlasdkmsakdmaskView: View {
 }
 
 struct UserInfo: Codable {
+    var email: String
     var username: String
     var password: String
+    var studentNumber: String
+    
+    enum CodingKeys: String, CodingKey {
+          case email = "email"
+          case username = "username"
+          case password = "password"
+          case studentNumber = "studentNumber"
+      }
 }
 
 class ViewModel: ObservableObject {
+    @Published var email = ""
     @Published var username = ""
     @Published var password = ""
+    @Published var studentNumber = ""
+    
+    
+    
+    let serverUrl = ServerUrl.shared
     
     func login() {
-        let url = "https://d3a0-221-168-22-205.ngrok-free.app/join"
-        let parameters = UserInfo(username: username, password: password)
+        let url = serverUrl.getUrl(for: "/auth/join")
+        let parameters = UserInfo(email: email, username: username, password: password, studentNumber: studentNumber)
         print(parameters)
         AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default)
             .validate(statusCode: 200..<300)

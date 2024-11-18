@@ -13,8 +13,7 @@ struct SheetView: View {
     @State var isPressed: Bool = false
     @State var selectedCategory: String = ""
     @State var animateScale: CGFloat = 1.0
-    @State var posts: [Post] = []
-
+    
     var arr = ["방에서 냄새가 나요","시설이 망가졌어요","소음이 너무 커요","기타","기타","기타"]
     let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -76,16 +75,16 @@ struct SheetView: View {
                 
                 Spacer().frame(height: 20)
                 
-                NavigationLink(destination: BoardView(posts: $posts, category: selectedCategory)) {
-                                    RoundedRectangle(cornerRadius: 13)
-                                        .frame(width: 314, height: 58)
-                                        .foregroundColor(.color)
-                                        .overlay(
-                                            Text("다음")
-                                                .font(.system(size: 20).weight(.semibold))
-                                                .foregroundColor(.white)
-                                        )
-                                }
+//                NavigationLink(destination: BoardView(posts: $posts, category: selectedCategory)) {
+//                                    RoundedRectangle(cornerRadius: 13)
+//                                        .frame(width: 314, height: 58)
+//                                        .foregroundColor(.color)
+//                                        .overlay(
+//                                            Text("다음")
+//                                                .font(.system(size: 20).weight(.semibold))
+//                                                .foregroundColor(.white)
+//                                        )
+//                                }
                 .offset(x: 0,y: 34)
                 .padding(.top,60)
                 Spacer().frame(height: 10)

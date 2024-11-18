@@ -3,7 +3,6 @@ import SwiftUI
 struct LoginView: View {
     @State private var id = ""
     @State private var password = ""
-    @ObservedObject var loginVM = LoginViewModel(user: User(name: "박민주", classId: "1116", id: "alswn", password: "alswn"))
     @State var showProgrees = false
 
     var body: some View {
@@ -67,8 +66,7 @@ struct LoginView: View {
                         }
                         
                         Button {
-                            loginVM.login(id: id, password: password)
-                            showProgrees = true
+                            //
                         } label: {
                             RoundedRectangle(cornerRadius: 14)
                                 .frame(width: 314, height: 58)
@@ -82,20 +80,20 @@ struct LoginView: View {
                         }
                         .offset(y: -30)
                         
-                        NavigationLink(destination: MainView(), isActive: $loginVM.isLogin) {
-                            EmptyView()
-                        }
+//                        NavigationLink(destination: MainView(), isActive: $loginVM.isLogin) {
+//                            EmptyView()
+//                        }
                     }
                 }
             }
             .navigationBarBackButtonHidden()
-            .alert(isPresented: $loginVM.alertOn) {
-                Alert(
-                    title: Text("로그인 실패"),
-                    message: Text("아이디 혹은 비밀번호가 일치하지 않습니다"),
-                    dismissButton: .default(Text("확인"))
-                )
-            }
+//            .alert(isPresented: $loginVM.alertOn) {
+//                Alert(
+//                    title: Text("로그인 실패"),
+//                    message: Text("아이디 혹은 비밀번호가 일치하지 않습니다"),
+//                    dismissButton: .default(Text("확인"))
+//                )
+//            }
         }
     
     
@@ -106,9 +104,6 @@ struct LoginView: View {
         } else {
             return true
         }
-    }
-    func progressView () -> Bool {
-        return loginVM.isLogin == true
     }
 }
 

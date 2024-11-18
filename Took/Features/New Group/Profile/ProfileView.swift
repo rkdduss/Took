@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var viewModel = LoginViewModel(user: User(name: "서민덕", classId: "1116", id: "서민덕", password: "서민덕"))
     @Environment(\.dismiss) private var dismiss
     @State var editName = ""
     @State var editProfile = false
@@ -46,13 +45,12 @@ struct ProfileView: View {
                         }
                         
                         HStack {
-                            Text(viewModel.loginVM.classId)
-                            Text(viewModel.loginVM.name)
+                            Text("1107")
+                            Text("서민덕")
                         }
                         .font(.system(size: 24).weight(.medium))
                         
                         Button {
-                            editName = viewModel.loginVM.name
                             editProfile = true
                         } label: {
                             RoundedRectangle(cornerRadius: 5)
@@ -202,7 +200,7 @@ struct ProfileView: View {
                                                 
                                                 ZStack {
                                                     Button {
-                                                        viewModel.alertOn = true
+                                                        //
                                                     } label: {
                                                         HStack {
                                                             Text("회원탈퇴")
@@ -222,19 +220,6 @@ struct ProfileView: View {
                                                 }
                                                 .frame(height: 40)
                                                 .offset(y: 24)
-                                                .alert(isPresented: $viewModel.alertOn) {
-                                                    Alert(
-                                                        title: Text("회원을 탈퇴하시겠습니까?"),
-                                                        message: Text("회원 정보는 되돌릴 수 없습니다."),
-                                                        primaryButton: .destructive(Text("탈퇴")) {
-                                                            viewModel.alertOn = false
-                                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                                                next = true
-                                                            }
-                                                        },
-                                                        secondaryButton: .cancel(Text("취소"))
-                                                    )
-                                                }
                                                 
                                                 
                                             }
@@ -291,7 +276,7 @@ struct ProfileView: View {
                                         .stroke(lineWidth: 0.2)
                                         .frame(width: 230, height: 36)
                                         .overlay(alignment: .leading) {
-                                            TextField("\(viewModel.loginVM.classId)", text: $editClassId)
+                                            TextField("1107", text: $editClassId)
                                                 .font(.system(size: 13).weight(.regular))
                                                 .autocapitalization(.none)
                                                 .padding(.leading, 10)
@@ -300,29 +285,29 @@ struct ProfileView: View {
                                         .stroke(lineWidth: 0.2)
                                         .frame(width: 230, height: 36)
                                         .overlay(alignment: .leading) {
-                                            TextField("\(viewModel.loginVM.name)", text: $editName)
+                                            TextField("서민덕", text: $editName)
                                                 .font(.system(size: 13).weight(.regular))
                                                 .autocapitalization(.none)
                                                 .padding(.leading, 10)
                                         }
                                     
-                                    Button {
-                                        if let newImage = image {
-                                            profileImage = newImage
-                                        }
-                                        if editProfile == false {
-                                            editName = viewModel.loginVM.name
-                                            editClassId = viewModel.loginVM.classId
-                                        }
-                                        viewModel.loginVM.name = editName
-                                        viewModel.loginVM.classId = editClassId
-                                        editProfile = false
-                                    } label: {
-                                        Text("수정 완료")
-                                            .font(.system(size: 17).weight(.regular))
-                                            .foregroundColor(.black)
-                                            .padding(.top, 20)
-                                    }
+//                                    Button {
+//                                        if let newImage = image {
+//                                            profileImage = newImage
+//                                        }
+//                                        if editProfile == false {
+//                                            editName = viewModel.loginVM.name
+//                                            editClassId = viewModel.loginVM.classId
+//                                        }
+//                                        viewModel.loginVM.name = editName
+//                                        viewModel.loginVM.classId = editClassId
+//                                        editProfile = false
+//                                    } label: {
+//                                        Text("수정 완료")
+//                                            .font(.system(size: 17).weight(.regular))
+//                                            .foregroundColor(.black)
+//                                            .padding(.top, 20)
+//                                    }
                                 }
                             }
                         

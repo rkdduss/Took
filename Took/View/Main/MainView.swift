@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MainView: View {
-//    @State var posts: [Post] = []
     @State var enterMain = false
     @State var pickerOn = false
-    @StateObject var posts = PostsData()
+    
+    
 
     var body: some View {
         ZStack {
@@ -118,9 +118,7 @@ struct MainView: View {
     }
 }
 
-class PostsData: ObservableObject {
-    @Published var items : [Post] = []
-}
+
 
 #Preview {
     MainView()
