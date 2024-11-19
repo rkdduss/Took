@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var id = ""
-    @State private var password = ""
+    @StateObject private var viewModel = LoginViewModel()
     @State var showProgrees = false
 
     var body: some View {
@@ -19,7 +18,7 @@ struct LoginView: View {
                         Spacer()
                         
                         Group {
-                            CustomTextField(placeholder: Text("아이디를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $id)
+                            CustomTextField(placeholder: Text("아이디를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $viewModel.email)
                                 .frame(width: 314, height: 58)
                                 .padding(.leading, 20)
                                 .background(
@@ -32,7 +31,7 @@ struct LoginView: View {
                                         }
                                 )
                             
-                            CustomTextField(placeholder: Text("비밀번호를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $password, isSecure: true)
+                            CustomTextField(placeholder: Text("비밀번호를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $viewModel.password, isSecure: true)
                                 .frame(width: 314, height: 58)
                                 .padding(.leading, 20)
                                 .background(
@@ -66,7 +65,7 @@ struct LoginView: View {
                         }
                         
                         Button {
-                            //
+                            viewModel.login()
                         } label: {
                             RoundedRectangle(cornerRadius: 14)
                                 .frame(width: 314, height: 58)
@@ -78,6 +77,7 @@ struct LoginView: View {
                                         .foregroundColor(LoginOn() ? Color.color : Color.secondary)
                                 )
                         }
+                        .disabled(!LoginOn())
                         .offset(y: -30)
                         
 //                        NavigationLink(destination: MainView(), isActive: $loginVM.isLogin) {
@@ -87,19 +87,19 @@ struct LoginView: View {
                 }
             }
             .navigationBarBackButtonHidden()
-//            .alert(isPresented: $loginVM.alertOn) {
-//                Alert(
-//                    title: Text("로그인 실패"),
-//                    message: Text("아이디 혹은 비밀번호가 일치하지 않습니다"),
-//                    dismissButton: .default(Text("확인"))
-//                )
-//            }
+            .alert(isPresented: $viewModel.alertOn) {
+                Alert(
+                    title: Text("로그인 실패"),
+                    message: Text("아이디 혹은 비밀번호가 일치하지 않습니다"),
+                    dismissButton: .default(Text("확인"))
+                )
+            }
         }
     
     
 
     func LoginOn () -> Bool {
-        if id.isEmpty || password.isEmpty {
+        if viewModel.email.isEmpty || viewModel.password.isEmpty {
             return false
         } else {
             return true

@@ -7,19 +7,56 @@
 
 import Foundation
 
-struct PostModel : Identifiable {
-    var id: Int
-    var title: String
-    var content: String
-    var userId: String
-    var comment: Comment
-    var likes: Int
+
+struct PostModel {
+    var data: Post
     
-    struct Comment {
-        var id: Int
-        var userId: String
-        var content: String
-        var post: String
-        var likes: Int
+    struct Post {
+        var id:String
+        var title:String
+        var category:String
+        var likes:Int
+        var comments: Comment
+        
+        struct Comment {
+            var id: Int
+            var postTitle: String
+            var writer: String
+            var content: String
+            var likes: Int
+            var isMine: Bool
+            var createdAt: String
+        }
+        
+        var isMine:  Bool
+        var createdAt: String
     }
+    var status: Int
+    var message: String
 }
+
+//{
+//  "data": [
+//    {
+//      "id": 0,
+//      "title": "string",
+//      "category": "ODOR",
+//      "likes": 0,
+//      "comments": [
+//        {
+//          "id": 0,
+//          "postTitle": "string",
+//          "writer": "string",
+//          "content": "string",
+//          "likes": 0,
+//          "isMine": true,
+//          "createdAt": "2024-11-18"
+//        }
+//      ],
+//      "isMine": true,
+//      "createdAt": "2024-11-18"
+//    }
+//  ],
+//  "status": 0,
+//  "message": "string"
+//}

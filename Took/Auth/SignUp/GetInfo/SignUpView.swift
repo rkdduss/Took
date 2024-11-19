@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @State var name = ""
-    @State var classId = ""
+    @StateObject var viewModel = SignUpViewModel()
     @State var nameFieldStroke = false
     @State var idFieldStroke = false
     @State var loginSuccess = false
@@ -41,7 +40,7 @@ struct SignUpView: View {
                         .overlay {
                             HStack {
                                 Image(systemName: "person.fill").font(.system(size: 24).weight(.regular)).padding(.leading,10).foregroundColor(.secondary)
-                                TextField("이름을 입력해주세요",text: $name, onEditingChanged: { isEditing in
+                                TextField("이름을 입력해주세요",text: $viewModel.username, onEditingChanged: { isEditing in
                                     self.nameFieldStroke = isEditing
                                 })
                                 .font(.system(size: 14).weight(.regular))
@@ -56,7 +55,7 @@ struct SignUpView: View {
                         .overlay {
                             HStack {
                                 Image(systemName: "person.fill").font(.system(size: 24).weight(.regular)).padding(.leading,10).foregroundColor(.secondary)
-                                TextField("학번을 입력해주세요 (1116)",text: $classId, onEditingChanged: { isEditing in
+                                TextField("학번을 입력해주세요 (1116)",text: $viewModel.studentNumber, onEditingChanged: { isEditing in
                                     self.idFieldStroke = isEditing
                                 })
                                 .keyboardType(.numberPad)
@@ -66,6 +65,7 @@ struct SignUpView: View {
                 }
                 Spacer()
                 Button {
+                    viewModel.signUp()
                     SignUpOn()
                     next.toggle()
                 } label: {
@@ -80,10 +80,8 @@ struct SignUpView: View {
                         )
                 }
                 .disabled(!SignUpOn())
-                NavigationLink(isActive: $next) {
-                    SignUpIdView()
-                } label: {
-                    Text("")
+                NavigationLink(destination: SignUpIdView(), isActive: $next) {
+                    EmptyView()
                 }
 
             }
@@ -91,7 +89,7 @@ struct SignUpView: View {
         .navigationBarBackButtonHidden()
     }
     func SignUpOn () -> Bool {
-        if name.isEmpty || classId.count < 4 {
+        if viewModel.username.isEmpty || viewModel.studentNumber.count < 4 {
             return false
         } else {
             return true
@@ -99,10 +97,15 @@ struct SignUpView: View {
     }
 }
 
+
+//MARK: 회원가입 중복아이디 뷰
+
+
 import SwiftUI
 
 struct SignUpIdView: View {
-    @State var sameID = ""
+    @StateObject private var viewModel = SignUpViewModel()
+    @State var click = false
     @State var nameFieldStroke = false
     @State var isDuplicateChecked = false
     @State var isDuplicate = false
@@ -141,10 +144,10 @@ struct SignUpIdView: View {
                                 .font(.system(size: 24).weight(.regular))
                                 .padding(.leading, 10)
                                 .foregroundColor(.secondary)
-                            TextField("아이디를 입력해주세요", text: $sameID, onEditingChanged: { isEditing in
+                            TextField("아이디를 입력해주세요", text: $viewModel.email, onEditingChanged: { isEditing in
                                 self.nameFieldStroke = isEditing
                             })
-                            .onChange(of: sameID) { change in
+                            .onChange(of: viewModel.email) { change in
                                 isDuplicateChecked = false
                                 isDuplicate = false
                             }
@@ -153,9 +156,10 @@ struct SignUpIdView: View {
                             .keyboardType(.alphabet)
                             .autocapitalization(.none)
                             Button {
-                                if sameID.count >= 4 {
+                                if viewModel.email.count >= 4 {
                                     isDuplicateChecked = true
                                     isDuplicate = userCheck()
+                                    click = true
                                 }
                             } label: {
                                 if !SignUpOn() {
@@ -189,15 +193,16 @@ struct SignUpIdView: View {
                         .font(.system(size: 14))
                         .foregroundColor(.green)
                         .offset(x: 10, y: -20)
-                } else if sameID.count < 4 && isDuplicateChecked {
+                } else if viewModel.email.count < 4  {
                     Text("아이디는 4글자 이상이어야 합니다.")
                         .font(.system(size: 14))
-                        .foregroundColor(.red)
+                        .foregroundColor(.secondary)
                         .offset(x: 10, y: -20)
                 }
             }
             Spacer()
             Button {
+                viewModel.signUp()
                 next.toggle()
             } label: {
                 RoundedRectangle(cornerRadius: 14)
@@ -214,11 +219,7 @@ struct SignUpIdView: View {
             NavigationLink(destination: SignUpPasswordView(),isActive: $next) {
                 EmptyView()
             }
-//            NavigationLink(isActive: $next) {
-//                SignUpPasswordView()
-//            } label: {
-//                Text("")
-//            }
+            
 
         }
         
@@ -226,14 +227,18 @@ struct SignUpIdView: View {
     }
     
     func SignUpOn() -> Bool {
-        return isDuplicateChecked && isDuplicate && sameID.count >= 4
+        return isDuplicateChecked && isDuplicate && viewModel.email.count >= 4
     }
     
     func userCheck() -> Bool {
-        return !userId.contains(sameID)
+        return !userId.contains(viewModel.email)
     }
 }
 
 #Preview {
     SignUpView()
+}
+
+#Preview {
+    SignUpIdView()
 }
