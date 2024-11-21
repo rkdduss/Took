@@ -72,7 +72,7 @@ struct SignUpPasswordView: View {
                                     .font(.system(size: 20).weight(.regular))
                                     .foregroundColor(SignUpOn() ? .color : .clear)
                                     .padding(.trailing, 18)
-                                    .animation(.easeInOut(duration: 0.3))
+                                    
                             }
                         }
                 }

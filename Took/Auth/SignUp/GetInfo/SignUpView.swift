@@ -66,7 +66,6 @@ struct SignUpView: View {
                 Spacer()
                 Button {
                     viewModel.signUp()
-                    SignUpOn()
                     next.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
