@@ -1,7 +1,7 @@
 import SwiftUI
 import PhotosUI
 
-struct BoardView: View {
+struct MyPostEditView: View {
     @StateObject var boardVM = BoardViewModel()
     @State var category = ""
     @Environment(\.dismiss) var dismiss
@@ -10,7 +10,7 @@ struct BoardView: View {
     @State private var selectedImages: [UIImage] = []
     @FocusState private var focusOn: Bool
     @State var alertOn = false
-    
+    @State var post: Post
 
 
     
@@ -60,7 +60,7 @@ struct BoardView: View {
                                 .padding(.bottom, 10)
                             
                             Text("제목").font(.custom("Pretendard-Black", size: 12))
-                            TextField("", text: $boardVM.title)
+                            TextField("제목을 입력해주세요", text: $boardVM.title)
                                 .autocapitalization(.none)
                                 .font(.system(size: 14).weight(.regular))
                                 .padding()
@@ -144,17 +144,13 @@ struct BoardView: View {
                         .padding(.leading, 27)
                         
                         Button(action: {
-                            boardVM.BoardWrite { success in
-                                if success {
-                                    alertOn = true
-                                }
-                            }
+                            //
                         }) {
                             RoundedRectangle(cornerRadius: 13)
                                 .frame(width: 338, height: 58)
                                 .foregroundColor(boardVM.content.count <= 500 && !boardVM.title.isEmpty && !boardVM.content.isEmpty ? .color : .disabled)
                                 .overlay(
-                                    Text("작성 완료")
+                                    Text("수정 완료")
                                         .font(.system(size: 20).weight(.semibold))
                                         .foregroundColor(.white)
                                         .kerning(1.5)
@@ -177,8 +173,8 @@ struct BoardView: View {
             }
             .alert(isPresented: $alertOn) {
                 Alert(
-                    title: Text("게시가 완료되었어요!"),
-                    message: Text("게시글이 정상적으로 게시 되었어요."),
+                    title: Text("수정이 완료되었어요!"),
+                    message: Text("게시글이 정상적으로 수정 되었어요."),
                     dismissButton: .default(Text("확인")) {
                         next = true
                     }
@@ -188,57 +184,6 @@ struct BoardView: View {
             .navigationBarBackButtonHidden()
             .sheet(isPresented: $openPhotoPicker) {
                 PhotoPicker(selectedImages: $selectedImages)
-            }
-        }
-    }
-}
-
-struct BoardView_Previews: PreviewProvider {
-    
-    
-    static var previews: some View {
-        BoardView(category: "")
-    }
-}
-
-
-struct PhotoPicker: UIViewControllerRepresentable {
-    @Binding var selectedImages: [UIImage]
-    
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selectionLimit = 0
-        
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = context.coordinator
-        return picker
-    }
-    
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
-        var parent: PhotoPicker
-        
-        init(_ parent: PhotoPicker) {
-            self.parent = parent
-        }
-        
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            picker.dismiss(animated: true)
-            
-            for result in results {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                    if let uiImage = image as? UIImage {
-                        DispatchQueue.main.async {
-                            self.parent.selectedImages.append(uiImage)
-                        }
-                    }
-                }
             }
         }
     }

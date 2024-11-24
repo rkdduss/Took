@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct Board : Codable, Identifiable {
-    var id = UUID()
+struct Board : Codable {
     var title: String
     var content: String
 }

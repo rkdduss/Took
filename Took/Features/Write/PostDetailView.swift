@@ -11,6 +11,7 @@ struct PostDetailView: View {
     @Environment(\.dismiss) var dismiss
     @State var heartOn = false
     @State var commentOn = false
+    var post: Post
     var body: some View {
         VStack {
             HStack {
@@ -25,11 +26,11 @@ struct PostDetailView: View {
             }
             .padding()
             VStack(alignment:.leading) {
-                Text("제목")
+                Text(post.title)
                     .font(.system(size: 24).weight(.bold))
                     .padding(.bottom,7)
                 HStack {
-                    Text("카테고리: \("악취")")
+                    Text("카테고리: \(post.category)")
                         .font(.system(size: 12).weight(.regular))
                         .foregroundColor(.secondary.opacity(0.8))
                     Button {
@@ -55,15 +56,15 @@ struct PostDetailView: View {
             
             ScrollView {
                 LazyVStack(alignment:.leading) {
-                    Text("내용")
+                    Text("본문")
                         .padding(.bottom,25)
                     Rectangle()
                         .frame(width: 250,height: 210)
                         .foregroundColor(.secondary)
                     HStack {
                         Spacer()
-                        Text("제목")
-                        Text("작성자: 김강연")
+                        Text(post.createdAt)
+                        Text("작성자: \(post.id)")
                     }
                     .font(.system(size: 12).weight(.regular))
                     .foregroundColor(.secondary)
@@ -77,8 +78,4 @@ struct PostDetailView: View {
         }
         .navigationBarBackButtonHidden()
     }
-}
-
-#Preview {
-    PostDetailView()
 }

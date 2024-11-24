@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     @State var enterMain = false
     @State var pickerOn = false
-    
+    @StateObject var postViewModel = PostViewModel()
     
 
     var body: some View {
@@ -55,9 +55,9 @@ struct MainView: View {
                             }
                             
                         }
-                        ForEach(1..<30) { i in
+                        ForEach(postViewModel.post) { posts in
                             NavigationLink {
-                                PostDetailView()
+                                PostDetailView(post: posts)
                             } label: {
                                 Rectangle().frame(width: 340,height: 1)
                                     .padding(.bottom,85)
@@ -65,14 +65,14 @@ struct MainView: View {
                                     .overlay(alignment:.leading) {
                                         HStack {
                                             VStack(alignment:.leading,spacing: 10) {
-                                                Text("3층에 냄새가 나요").font(.system(size: 14).weight(.medium))
-                                                Text("2024.10.10")
+                                                Text(posts.title).font(.system(size: 14).weight(.medium))
+                                                Text(posts.createdAt)
                                                     .font(.system(size: 12).weight(.regular))
                                                     .foregroundColor(.tookgray)
                                             }
-                                            Spacer().frame(width: 100)
+                                            Spacer()
                                             VStack {
-                                                Text("카테고리: 악취")
+                                                Text("카테고리: \(posts.category)")
                                                     .font(.system(size: 12).weight(.regular))
                                                     .foregroundColor(.tookgray)
                                                 Spacer().frame(height: 10)
@@ -113,6 +113,9 @@ struct MainView: View {
             }
             .offset(x:130,y:340)
         }
+        .onAppear {
+            postViewModel.fetchPosts()
+        }
         .refreshable{}
         .navigationBarBackButtonHidden()
     }
@@ -123,3 +126,6 @@ struct MainView: View {
 #Preview {
     MainView()
 }
+
+
+

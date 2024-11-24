@@ -8,32 +8,37 @@
 import Foundation
 
 
-struct PostModel {
-    var data: Post
-    
-    struct Post {
-        var id:String
-        var title:String
-        var category:String
-        var likes:Int
-        var comments: Comment
-        
-        struct Comment {
-            var id: Int
-            var postTitle: String
-            var writer: String
-            var content: String
-            var likes: Int
-            var isMine: Bool
-            var createdAt: String
-        }
-        
-        var isMine:  Bool
-        var createdAt: String
-    }
-    var status: Int
-    var message: String
+import Foundation
+
+
+struct Comment: Identifiable, Codable {
+    let id: Int
+    let postTitle: String
+    let writer: String
+    let content: String
+    let likes: Int
+    let isMine: Bool
+    let createdAt: String
 }
+
+
+struct Post: Identifiable, Codable {
+    let id: Int
+    let title: String
+    let category: String
+    let likes: Int
+    let comments: [Comment]
+    let isMine: Bool
+    let createdAt: String
+}
+
+
+struct PostResponse: Codable {
+    let data: [Post]
+    let status: Int
+    let message: String
+}
+
 
 //{
 //  "data": [

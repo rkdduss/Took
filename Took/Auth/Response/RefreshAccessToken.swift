@@ -11,16 +11,16 @@ class RefreshAccessToken {
     func reissue(completion: @escaping (Bool) -> Void) {
         let url = serverUrl.getUrl(for: "/auth/reissue")
 
-        guard let refresh = UserDefaults.standard.string(forKey: "refresh") else {
+        guard let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") else {
             print("Refresh token이 존재하지 않습니다.")
             completion(false)
             return
         }
 
-        print("재발급 요청 Refresh Token: \(refresh)")
+        print(refreshToken)
 
         let parameter: [String: Any] = [
-            "refresh": refresh
+            "refreshToken": refreshToken
         ]
 
         AF.request(url,
@@ -29,13 +29,12 @@ class RefreshAccessToken {
                    encoding: JSONEncoding.default
         )
         .validate()
-        .responseDecodable(of: BaseResponse<TokenResponse>.self) { response in
+        .responseDecodable(of: TokenResponse.self) { response in
             switch response.result {
-            case .success(let baseResponse):
-                let tokenResponse = baseResponse.data
-                UserDefaults.standard.set(tokenResponse.accessToken, forKey: "access")
-                UserDefaults.standard.set(tokenResponse.refreshToken, forKey: "refresh")
-                print("토큰 재발급 성공")
+            case .success(let tokenResponse):
+                UserDefaults.standard.set(tokenResponse.data.accessToken, forKey: "accessToken")
+                UserDefaults.standard.set(tokenResponse.data.refreshToken, forKey: "refreshToken")
+                print("토큰재발급 성공")
                 completion(true)
 
             case .failure(let error):
@@ -45,17 +44,12 @@ class RefreshAccessToken {
                     print("응답 코드: \(httpResponse.statusCode)")
                 }
 
-                if let data = response.data {
-                    do {
-                        let errorResponse = try JSONDecoder().decode(BaseResponse<String>.self, from: data)
-                        print("서버 오류 메시지: \(errorResponse.message)")
-                    } catch {
-                        print("오류 메시지 디코딩 실패")
-                    }
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("서버 응답: \(errorMessage)")
                 }
 
-                UserDefaults.standard.removeObject(forKey: "access")
-                UserDefaults.standard.removeObject(forKey: "refresh")
+                UserDefaults.standard.removeObject(forKey: "accessToken")
+                UserDefaults.standard.removeObject(forKey: "refreshToken")
 
                 completion(false)
             }

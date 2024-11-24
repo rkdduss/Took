@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var viewModel = LoginViewModel()
+    @StateObject private var loginViewModel = LoginViewModel()
     @State var showProgrees = false
+    @State private var isLoginSuccess = false
+    @State private var showAlert = false
 
     var body: some View {
         GeometryReader { scale in
@@ -18,7 +20,7 @@ struct LoginView: View {
                         Spacer()
                         
                         Group {
-                            CustomTextField(placeholder: Text("아이디를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $viewModel.email)
+                            CustomTextField(placeholder: Text("아이디를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $loginViewModel.email)
                                 .frame(width: 314, height: 58)
                                 .padding(.leading, 20)
                                 .background(
@@ -31,7 +33,7 @@ struct LoginView: View {
                                         }
                                 )
                             
-                            CustomTextField(placeholder: Text("비밀번호를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $viewModel.password, isSecure: true)
+                            CustomTextField(placeholder: Text("비밀번호를 입력해주세요").foregroundColor(.white).font(.system(size: 14).weight(.regular)), text: $loginViewModel.password, isSecure: true)
                                 .frame(width: 314, height: 58)
                                 .padding(.leading, 20)
                                 .background(
@@ -65,7 +67,14 @@ struct LoginView: View {
                         }
                         
                         Button {
-                            viewModel.login()
+                            loginViewModel.login { success in
+                                if success {
+                                    isLoginSuccess = true
+                                } else {
+                                    print(loginViewModel.loginerrorMessage ?? "로그인 실패")
+                                    showAlert = true
+                                }
+                            }
                         } label: {
                             RoundedRectangle(cornerRadius: 14)
                                 .frame(width: 314, height: 58)
@@ -87,7 +96,7 @@ struct LoginView: View {
                 }
             }
             .navigationBarBackButtonHidden()
-            .alert(isPresented: $viewModel.alertOn) {
+            .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("로그인 실패"),
                     message: Text("아이디 혹은 비밀번호가 일치하지 않습니다"),
@@ -99,7 +108,7 @@ struct LoginView: View {
     
 
     func LoginOn () -> Bool {
-        if viewModel.email.isEmpty || viewModel.password.isEmpty {
+        if loginViewModel.email.isEmpty || loginViewModel.password.isEmpty {
             return false
         } else {
             return true

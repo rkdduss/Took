@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct SignUpFinalView: View {
+    @ObservedObject var signupViewModel: SignUpViewModel = .init()
     @State var password = ""
     @State var passwordCheck = ""
     @State var nameFieldStroke = false
     @State var idFieldStroke = false
     @State var loginSuccess = false
     @State var next = false
-    @State var isExpanded1 = true
+    @State private var showMain = false
+
     
     @FocusState private var isPasswordFieldFocused: Bool
     @Environment(\.dismiss) private var dismiss
@@ -45,6 +47,14 @@ struct SignUpFinalView: View {
                 }.padding(.top,35)
                 Spacer()
                 Button {
+                    Task {
+                        let signupResult = await signupViewModel.signup()
+                        if signupResult {
+                            showMain = true
+                        } else {
+                            print("회원가입 실패")
+                        }
+                    }
                     next.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
@@ -66,11 +76,7 @@ struct SignUpFinalView: View {
             .navigationBarBackButtonHidden()
         
     }
-    private func startAnimation1() {
-        withAnimation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
-            isExpanded1.toggle()
-        }
-    }
+    
 }
 
 #Preview {

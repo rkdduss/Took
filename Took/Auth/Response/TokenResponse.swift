@@ -7,18 +7,15 @@
 
 import Foundation
 
-struct TokenResponse: Decodable {
-    let accessToken: String
-    let refreshToken: String
-    
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access"
-        case refreshToken = "refresh"
-    }
-}
 
-struct BaseResponse<T: Decodable>: Decodable {
+
+struct TokenResponse: Codable {
+    let data: TokenData
     let status: Int
     let message: String
-    let data: T
+}
+
+struct TokenData: Codable {
+    let accessToken: String
+    let refreshToken: String
 }

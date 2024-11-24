@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @StateObject private var profileViewModel = ProfileViewModel()
     @Environment(\.dismiss) private var dismiss
     @State var editName = ""
     @State var editProfile = false
@@ -9,6 +10,7 @@ struct ProfileView: View {
     @State var selectedUIImage: UIImage?
     @State var image: Image?
     @State var next = false
+    var user: UserData?
     
     @State var profileImage: Image? = Image(systemName: "person.crop.circle.fill")
     
@@ -43,13 +45,14 @@ struct ProfileView: View {
                                 .font(.system(size: 100).weight(.regular))
                                 .foregroundColor(.fileUpload)
                         }
-                        
-                        HStack {
-                            Text("1107")
-                            Text("서민덕")
+                        if let user = user {
+                            HStack {
+                                Text("\(user.studentNumber)")
+                                Text(user.name)
+                            }
+                            .font(.system(size: 24).weight(.medium))
+                            
                         }
-                        .font(.system(size: 24).weight(.medium))
-                        
                         Button {
                             editProfile = true
                         } label: {
@@ -290,24 +293,7 @@ struct ProfileView: View {
                                                 .autocapitalization(.none)
                                                 .padding(.leading, 10)
                                         }
-                                    
-//                                    Button {
-//                                        if let newImage = image {
-//                                            profileImage = newImage
-//                                        }
-//                                        if editProfile == false {
-//                                            editName = viewModel.loginVM.name
-//                                            editClassId = viewModel.loginVM.classId
-//                                        }
-//                                        viewModel.loginVM.name = editName
-//                                        viewModel.loginVM.classId = editClassId
-//                                        editProfile = false
-//                                    } label: {
-//                                        Text("수정 완료")
-//                                            .font(.system(size: 17).weight(.regular))
-//                                            .foregroundColor(.black)
-//                                            .padding(.top, 20)
-//                                    }
+
                                 }
                             }
                         

@@ -9,11 +9,24 @@ import SwiftUI
 
 @main
 struct TookApp: App {
+    @AppStorage("accessToken")    
+    private var accessToken: String?
+    @StateObject private var loginViewModel = LoginViewModel()
     var body: some Scene {
         WindowGroup {
-            NavigationView() {
-                LoginView()
+                NavigationView {
+                    if accessToken == nil {
+                        LoginExView()
+                    } else {
+                        MainView()
+                            .environmentObject(loginViewModel)
+                    }
+                }
             }
         }
     }
-}
+
+
+
+
+

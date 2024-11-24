@@ -12,12 +12,16 @@ struct SignUpModel: Codable {
     var email: String
     var username: String
     var password: String
-    var studentNumber: String
-    
-    enum CodingKeys: String, CodingKey {
-          case email = "email"
-          case username = "username"
-          case password = "password"
-          case studentNumber = "studentNumber"
-      }
+    var studentNumber: Int
+ 
 }
+
+
+struct SignUpResponse: Decodable {
+    var email: String
+    var username: String
+    var password: String
+    var studentNumber: Int
+}
+
+

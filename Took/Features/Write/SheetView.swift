@@ -75,16 +75,16 @@ struct SheetView: View {
                 
                 Spacer().frame(height: 20)
                 
-//                NavigationLink(destination: BoardView(posts: $posts, category: selectedCategory)) {
-//                                    RoundedRectangle(cornerRadius: 13)
-//                                        .frame(width: 314, height: 58)
-//                                        .foregroundColor(.color)
-//                                        .overlay(
-//                                            Text("다음")
-//                                                .font(.system(size: 20).weight(.semibold))
-//                                                .foregroundColor(.white)
-//                                        )
-//                                }
+                NavigationLink(destination: BoardView()) {
+                                    RoundedRectangle(cornerRadius: 13)
+                                        .frame(width: 314, height: 58)
+                                        .foregroundColor(.color)
+                                        .overlay(
+                                            Text("다음")
+                                                .font(.system(size: 20).weight(.semibold))
+                                                .foregroundColor(.white)
+                                        )
+                                }
                 .offset(x: 0,y: 34)
                 .padding(.top,60)
                 Spacer().frame(height: 10)

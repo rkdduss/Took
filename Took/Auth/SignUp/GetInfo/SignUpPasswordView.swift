@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SignUpPasswordView: View {
-    @State var password = ""
+    @ObservedObject var signupViewModel: SignUpViewModel = .init()
     @State var passwordCheck = ""
     @State var nameFieldStroke = false
     @State var idFieldStroke = false
@@ -40,7 +40,7 @@ struct SignUpPasswordView: View {
                                     .font(.system(size: 24).weight(.regular))
                                     .padding(.leading, 10)
                                     .foregroundColor(.secondary)
-                                TextField("비밀번호를 입력해주세요", text: $password, onEditingChanged: { isEditing in
+                                TextField("비밀번호를 입력해주세요", text: $signupViewModel.password, onEditingChanged: { isEditing in
                                     self.nameFieldStroke = isEditing
                                 })
                                 .font(.system(size: 14).weight(.regular))
@@ -101,7 +101,7 @@ struct SignUpPasswordView: View {
     }
     
     func SignUpOn() -> Bool {
-        return !password.isEmpty && password.count >= 8 && password == passwordCheck
+        return !signupViewModel.password.isEmpty && signupViewModel.password.count >= 8 && signupViewModel.password == passwordCheck
     }
 }
 
