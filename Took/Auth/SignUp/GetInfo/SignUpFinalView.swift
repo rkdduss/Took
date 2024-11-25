@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpFinalView: View {
-    @ObservedObject var signupViewModel: SignUpViewModel = .init()
+    @ObservedObject  var viewModel : SignUpViewModel
     @State var password = ""
     @State var passwordCheck = ""
     @State var nameFieldStroke = false
@@ -48,14 +48,14 @@ struct SignUpFinalView: View {
                 Spacer()
                 Button {
                     Task {
-                        let signupResult = await signupViewModel.signup()
+                        let signupResult = await viewModel.signup()
                         if signupResult {
                             showMain = true
                         } else {
                             print("회원가입 실패")
                         }
                     }
-                    next.toggle()
+                    
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
                         .frame(width: 314, height: 58)
@@ -68,7 +68,7 @@ struct SignUpFinalView: View {
                         )
                     
                 }
-                NavigationLink(destination: MainView(),isActive: $next) {
+                NavigationLink(destination: LoginView(),isActive: $showMain) {
                     EmptyView()
                 }
 
@@ -80,5 +80,5 @@ struct SignUpFinalView: View {
 }
 
 #Preview {
-    SignUpFinalView()
+    SignUpFinalView(viewModel: SignUpViewModel())
 }

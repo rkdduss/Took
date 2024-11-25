@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SignUpPasswordView: View {
-    @ObservedObject var signupViewModel: SignUpViewModel = .init()
+    @ObservedObject  var signupViewModel : SignUpViewModel
     @State var passwordCheck = ""
     @State var nameFieldStroke = false
     @State var idFieldStroke = false
@@ -91,7 +91,7 @@ struct SignUpPasswordView: View {
                         )
                 }
                 .disabled(!SignUpOn())
-                NavigationLink(destination: SignUpFinalView(),isActive: $showFinalView) {
+                NavigationLink(destination: SignUpFinalView(viewModel: signupViewModel),isActive: $showFinalView) {
                     EmptyView()
                 }
             }
@@ -107,5 +107,5 @@ struct SignUpPasswordView: View {
 
 
 #Preview {
-    SignUpPasswordView()
+    SignUpPasswordView(signupViewModel: SignUpViewModel())
 }

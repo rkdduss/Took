@@ -8,20 +8,6 @@
 import Foundation
 
 
-import Foundation
-
-
-struct Comment: Identifiable, Codable {
-    let id: Int
-    let postTitle: String
-    let writer: String
-    let content: String
-    let likes: Int
-    let isMine: Bool
-    let createdAt: String
-}
-
-
 struct Post: Identifiable, Codable {
     let id: Int
     let title: String

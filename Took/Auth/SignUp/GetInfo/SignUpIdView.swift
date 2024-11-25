@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct SignUpIdView: View {
-    @StateObject private var viewModel = SignUpViewModel()
+    @ObservedObject  var viewModel : SignUpViewModel
     @State var click = false
     @State var nameFieldStroke = false
     @State var isDuplicateChecked = false
@@ -121,7 +121,7 @@ struct SignUpIdView: View {
                     )
             }
             .disabled(!SignUpOn())
-            NavigationLink(destination: SignUpPasswordView(),isActive: $next) {
+            NavigationLink(destination: SignUpPasswordView(signupViewModel: viewModel),isActive: $next) {
                 EmptyView()
             }
             
@@ -141,5 +141,5 @@ struct SignUpIdView: View {
 }
 
 #Preview {
-    SignUpIdView()
+    SignUpIdView(viewModel: SignUpViewModel())
 }

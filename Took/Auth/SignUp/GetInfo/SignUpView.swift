@@ -79,7 +79,7 @@ struct SignUpView: View {
                         )
                 }
                 .disabled(!SignUpOn())
-                NavigationLink(destination: SignUpIdView(), isActive: $next) {
+                NavigationLink(destination: SignUpIdView(viewModel: viewModel), isActive: $next) {
                     EmptyView()
                 }
 
@@ -100,5 +100,5 @@ struct SignUpView: View {
 
 
 #Preview {
-    SignUpIdView()
+    SignUpView()
 }

@@ -32,7 +32,7 @@ struct SignUpExView: View {
             } label: {
                 Text("Button")
             }
-            NavigationLink(destination: LoginExView(),isActive:$showMain) {
+            NavigationLink(destination: LoginView(),isActive:$showMain) {
                 EmptyView()
             }
         }

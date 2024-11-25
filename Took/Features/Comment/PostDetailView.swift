@@ -13,7 +13,7 @@ struct PostDetailView: View {
     @State var commentOn = false
     var post: Post
     var body: some View {
-        VStack {
+        VStack(alignment:.leading) {
             HStack {
                 Button {
                     dismiss()
@@ -39,16 +39,22 @@ struct PostDetailView: View {
                         Image(systemName: "heart").font(.system(size: 12).weight(.regular))
                             .foregroundColor(.fileUpload)
                     }
+                    Text("\(post.likes)")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary.opacity(0.8))
                     Button {
                         commentOn.toggle()
                     } label: {
                         Image(systemName: "bubble.right").font(.system(size: 11).weight(.regular))
                             .foregroundColor(.fileUpload)
                     }.padding(.bottom,-0.8)
+                    Text("\(post.comments.count)")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary.opacity(0.8))
                 }
                 
             }
-            .padding(.trailing,45)
+            .padding(.leading,32)
             .padding(.bottom,20)
             Rectangle()
                 .frame(width: 340,height: 0.7)
@@ -76,6 +82,56 @@ struct PostDetailView: View {
                 .padding(.top,20)
             }
         }
+        .overlay(alignment:.center) {
+            VStack {
+                Spacer()
+                NavigationLink {
+                    CommentView(postId: post.id)
+                } label: {
+                    RoundedRectangle(cornerRadius: 13)
+                        .frame(width: 314, height: 58)
+                        .foregroundColor(.color)
+                        .overlay(
+                            Text("댓글 보기")
+                                .font(.system(size: 20).weight(.semibold))
+                                .foregroundColor(.white)
+                                .kerning(1.5)
+                        )
+                }
+            }
+        }
         .navigationBarBackButtonHidden()
     }
+}
+#Preview {
+    PostDetailView(
+        post: Post(
+            id: 123,
+            title: "제목",
+            category: "카테고리",
+            likes: 123,
+            comments: [
+                Comment(
+                    id: 1,
+                    postTitle: "제목",
+                    writer: "작성자",
+                    content: "댓글 내용",
+                    likes: 10,
+                    isMine: true,
+                    createdAt: "2024-11-25"
+                ),
+                Comment(
+                    id: 2,
+                    postTitle: "제목",
+                    writer: "다른 작성자",
+                    content: "다른 댓글 내용",
+                    likes: 5,
+                    isMine: false,
+                    createdAt: "2024-11-24"
+                )
+            ],
+            isMine: true,
+            createdAt: "2024-11-25"
+        )
+    )
 }
