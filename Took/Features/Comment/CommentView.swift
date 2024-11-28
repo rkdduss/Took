@@ -52,7 +52,7 @@ struct CommentView: View {
                                 }
                                 
                             Button {
-                                //
+                                print("click")
                             } label: {
                                 RoundedRectangle(cornerRadius: 4)
                                     .frame(width: 300,height: 35)
@@ -71,6 +71,7 @@ struct CommentView: View {
                             CommentBox(comment: comments)
                         }
                     }
+                    
                 }
             }
         }
