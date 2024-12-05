@@ -74,7 +74,6 @@ struct SignUpFinalView: View {
 
             }
             .navigationBarBackButtonHidden()
-        
     }
     
 }

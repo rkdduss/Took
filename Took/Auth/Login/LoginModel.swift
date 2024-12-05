@@ -11,3 +11,9 @@ struct LoginModel: Codable {
     var email: String
     var password: String
 }
+
+
+struct LoginResponse : Decodable {
+    var email: String
+    var password: String
+}
