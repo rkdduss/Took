@@ -140,6 +140,7 @@ struct SignUpIdView: View {
     }
 }
 
+
 #Preview {
     SignUpIdView(viewModel: SignUpViewModel())
 }
