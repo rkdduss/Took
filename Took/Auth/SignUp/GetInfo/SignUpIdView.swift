@@ -17,7 +17,7 @@ struct SignUpIdView: View {
     @State var isDuplicate = false
     @Environment(\.dismiss) private var dismiss
     @State private var next = false
-    var userId = ["alswn", "kangkun", "pushduck", "kangyeon"]
+    var userId = ["alswn", "kangkun", "pushduck", "kangyeon","sangeun","gichan"]
     
     
     
