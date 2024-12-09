@@ -15,12 +15,11 @@ struct TookApp: App {
     var body: some Scene {
         WindowGroup {
                 NavigationView {
-                    LoginView()
-//                    if accessToken == nil {
-//                        LoginView()
-//                    } else {
-//                        MainView()
-//                    }
+                    if accessToken == nil {
+                        LoginView()
+                    } else {
+                        MainView()
+                    }
                 }
             }
         }
