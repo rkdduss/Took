@@ -17,6 +17,13 @@ struct CommentView: View {
         VStack {
             ForEach(viewModel.comment) { comments in
                 Text(comments.createdAt)
+                Text(comments.content)
+                
+                ScrollView {
+                    LazyVStack {
+                        
+                    }
+                }
             }
         }
 //        VStack(alignment:.leading) {
