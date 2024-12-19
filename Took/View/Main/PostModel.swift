@@ -25,6 +25,12 @@ struct PostResponse: Codable {
     let message: String
 }
 
+struct PostResponse {
+    let data: [Post]
+    let status: Int
+    let message: String
+}
+
 
 //{
 //  "data": [

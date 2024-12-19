@@ -48,7 +48,6 @@
 		198D2CE02CD3A140001F09EB /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 198D2CD72CD3A140001F09EB /* Pretendard-Light.ttf */; };
 		198D2CE22CD3A382001F09EB /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198D2CE12CD3A382001F09EB /* PostDetailView.swift */; };
 		198D2CE52CD3B381001F09EB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 198D2CE42CD3B381001F09EB /* Alamofire */; };
-		198D2CE92CD3B5E5001F09EB /* alsdlasdkmsakdmaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198D2CE82CD3B5E5001F09EB /* alsdlasdkmsakdmaskView.swift */; };
 		1991F3672C9C325B0030EFDE /* TookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991F3662C9C325B0030EFDE /* TookApp.swift */; };
 		1991F36B2C9C325E0030EFDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1991F36A2C9C325E0030EFDE /* Assets.xcassets */; };
 		1991F36E2C9C325E0030EFDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1991F36D2C9C325E0030EFDE /* Preview Assets.xcassets */; };
@@ -104,7 +103,6 @@
 		198D2CD62CD3A140001F09EB /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		198D2CD72CD3A140001F09EB /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		198D2CE12CD3A382001F09EB /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
-		198D2CE82CD3B5E5001F09EB /* alsdlasdkmsakdmaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alsdlasdkmsakdmaskView.swift; sourceTree = "<group>"; };
 		1991F3632C9C325B0030EFDE /* Took.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Took.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1991F3662C9C325B0030EFDE /* TookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TookApp.swift; sourceTree = "<group>"; };
 		1991F36A2C9C325E0030EFDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				196B9D7D2CE72877006DFF0E /* Main */,
-				198D2CE82CD3B5E5001F09EB /* alsdlasdkmsakdmaskView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -435,7 +432,6 @@
 				196A9B422CBFC9C60004856E /* SignUpFinalView.swift in Sources */,
 				196B9D7C2CE72873006DFF0E /* PostViewModel.swift in Sources */,
 				19DF96522CA2F4340077255F /* BoardView.swift in Sources */,
-				198D2CE92CD3B5E5001F09EB /* alsdlasdkmsakdmaskView.swift in Sources */,
 				191CFD2D2CF4704B00EE3CF2 /* CommentViewModel.swift in Sources */,
 				196B9E0C2CEB76D0006DFF0E /* LoginViewModel.swift in Sources */,
 				1917C4CF2C9CEEE600791E59 /* UIApplication.swift in Sources */,
