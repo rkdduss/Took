@@ -16,6 +16,8 @@ class PostViewModel: ObservableObject {
           return UserDefaults.standard.string(forKey: "accessToken") ?? ""
       }
     
+    
+    
     func fetchPosts() {
         let url = serverUel.getUrl(for: "/posts")
         let headers : HTTPHeaders = [
@@ -24,7 +26,7 @@ class PostViewModel: ObservableObject {
         ]
         
         AF.request(
-            url,
+            "http://54.196.130.7:8080/posts?sortType=LATEST&page=0",
             method: .get,
             encoding: JSONEncoding.default,
             headers: headers
