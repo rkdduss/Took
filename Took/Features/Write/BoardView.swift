@@ -175,6 +175,7 @@ struct BoardView: View {
                         EmptyView()
                 }
             }
+            
             .alert(isPresented: $alertOn) {
                 Alert(
                     title: Text("게시가 완료되었어요!"),

@@ -26,7 +26,6 @@ class BoardViewModel: ObservableObject {
             "Authorization": "Bearer \(accessToken)"
         ]
 
-        
         AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: headers)
             .validate(statusCode: 200..<300)
             .response { response in
