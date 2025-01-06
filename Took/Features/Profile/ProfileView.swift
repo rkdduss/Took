@@ -53,6 +53,7 @@ struct ProfileView: View {
                             .font(.system(size: 24).weight(.medium))
                             
                         }
+                        
                         Button {
                             editProfile = true
                         } label: {
