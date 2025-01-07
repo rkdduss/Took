@@ -37,6 +37,7 @@ class ProfileViewModel: ObservableObject {
         ]
 
         
+        
         AF.request(url, method: .get, headers: headers)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: [UserData].self) { response in
