@@ -51,6 +51,7 @@ class MyPostViewModel: ObservableObject {
               "Content-Type": "application/json",
               "Authorization": "Bearer \(accessToken)"
           ]
+        
           
           AF.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
               .validate(statusCode: 200..<300)

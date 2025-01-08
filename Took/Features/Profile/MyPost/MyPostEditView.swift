@@ -181,6 +181,7 @@ struct MyPostEditView: View {
                 )
             }
             
+            
             .navigationBarBackButtonHidden()
             .sheet(isPresented: $openPhotoPicker) {
                 PhotoPicker(selectedImages: $selectedImages)

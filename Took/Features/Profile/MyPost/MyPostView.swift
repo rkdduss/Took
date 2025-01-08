@@ -35,6 +35,7 @@ struct MyPostView: View {
             .frame(height: 20)
             .padding(.leading,18)
             .padding(.top,20)
+            
         
             ScrollView {
                 LazyVStack {
