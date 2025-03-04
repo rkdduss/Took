@@ -11,10 +11,6 @@ struct BoardView: View {
     @FocusState private var focusOn: Bool
     @State var alertOn = false
     
-
-
-    
-    
     var wordCount: Int {
         boardVM.title.isEmpty ? 0 : boardVM.title.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .whitespacesAndNewlines).count
     }
@@ -184,6 +180,7 @@ struct BoardView: View {
                         next = true
                     }
                 )
+                
             }
             
             .navigationBarBackButtonHidden()

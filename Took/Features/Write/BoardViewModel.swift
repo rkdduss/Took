@@ -17,7 +17,7 @@ class BoardViewModel: ObservableObject {
       
     
     func BoardWrite(completion: @escaping (Bool) -> Void) {
-        let url = serverUrl.getUrl(for: "/posts/write")
+        let url = serverUrl.getUrl(for: "/posts")
         let parameters = Board(title: title, content: content)
         print(parameters)
         
